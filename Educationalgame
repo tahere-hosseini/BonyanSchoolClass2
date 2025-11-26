@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>بازی سوالات علوم دوم دبستان - دبستان پسرانه بنیان</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            touch-action: manipulation;
+        }
+
+        body {
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6, #ffaaa5);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5vh 4vw;
+            overflow-x: hidden;
+            position: relative;
+            direction: rtl;
+            width: 100%;
+            max-width: 100vw;
+        }
+
+        .game-container {
+            width: 100%;
+            max-width: 90vw;
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 6vw;
+            padding: 7vh 5vw;
+            box-shadow: 0 4vh 10vh rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            z-index: 20;
+            border: 0.8vw solid white;
+            position: relative;
+        }
+
+        .game-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2vh;
+            background: linear-gradient(90deg, #ff6b9d, #ff9e6d, #a8e6cf, #6eceda);
+            z-index: 25;
+        }
+
+        .header {
+            margin-bottom: 5vh;
+        }
+
+        .school-title {
+            font-size: 3.2vw;
+            color: #e74c3c;
+            margin-bottom: 1.6vh;
+            font-weight: 700;
+            text-shadow: 0.2vw 0.2vw 0 #ffd166;
+        }
+
+        .title {
+            font-size: 5vw;
+            color: #2a9d8f;
+            margin-bottom: 3vh;
+            text-shadow: 0.4vw 0.4vw 0 #ffd166;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 2.5vw;
+            color: #e9c46a;
+            margin-bottom: 4vh;
+            font-weight: 600;
+        }
+
+        .question-box {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 5.6vw;
+            padding: 7vh 5vw;
+            margin-bottom: 6vh;
+            box-shadow: 0 2vh 6vh rgba(0, 0, 0, 0.15);
+            border: 0.8vw dashed #ff9e6d;
+            position: relative;
+            min-height: 36vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 22;
+        }
+
+        .question-text {
+            font-size: 3vw;
+            line-height: 1.7;
+            color: #264653;
+            padding: 0 3vw;
+            font-weight: 600;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4.4vh;
+            margin-top: 5vh;
+            z-index: 22;
+            position: relative;
+        }
+
+        @media (max-width: 600px) {
+            .options-container {
+                grid-template-columns: 1fr;
+                gap: 3vh;
+            }
+            
+            .school-title { font-size: 4.5vw; }
+            .title { font-size: 7vw; }
+            .subtitle { font-size: 3.5vw; }
+            .question-text { font-size: 4.2vw; }
+        }
+
+        .option {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border-radius: 4.4vw;
+            padding: 4.4vh 3.6vw;
+            font-size: 2.44vw;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 1.6vh 4vh rgba(0, 0, 0, 0.12);
+            font-weight: 600;
+            color: #d35400;
+            border: 0.6vw solid transparent;
+            text-align: center;
+            min-height: 22vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            position: relative;
+            z-index: 22;
+        }
+
+        .option:active {
+            background: linear-gradient(135deg, #ffdd9b, #ffaf7b);
+            transform: translateY(-1vh);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            color: white;
+            border-color: #00c9ff;
+            box-shadow: 0 0 3vh rgba(37, 117, 252, 0.4);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 5vh;
+            margin-top: 6vh;
+            z-index: 22;
+            position: relative;
+        }
+
+        .btn {
+            padding: 3.2vh 7.6vw;
+            font-size: 2.7vw;
+            font-weight: 700;
+            border: none;
+            border-radius: 10vw;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 1.6vh 5vh rgba(0, 0, 0, 0.3);
+            font-family: 'Vazirmatn', sans-serif;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            width: 100%;
+            max-width: 64vw;
+            z-index: 22;
+            position: relative;
+        }
+
+        .btn:active {
+            transform: translateY(0.5vh);
+            box-shadow: 0 0.8vh 3vh rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff5252, #ff4081);
+            color: white;
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.5);
+            height: 4.4vh;
+            border-radius: 2.2vh;
+            margin: 4.4vh 0;
+            overflow: hidden;
+            box-shadow: inset 0 0.6vh 1.6vh rgba(0, 0, 0, 0.15);
+            z-index: 22;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2a9d8f, #4caf50, #8bc34a);
+            width: 0%;
+            transition: width 0.6s ease;
+            z-index: 23;
+        }
+
+        .score-display {
+            font-size: 2.6vw;
+            margin-top: 3.6vh;
+            color: #264653;
+            font-weight: 700;
+            z-index: 22;
+            position: relative;
+        }
+
+        .result-screen {
+            display: none;
+            text-align: center;
+            padding: 7vh 5vw;
+            z-index: 22;
+            position: relative;
+        }
+
+        .result-title {
+            font-size: 5.8vw;
+            color: #e74c3c;
+            margin-bottom: 5vh;
+            text-shadow: 0.4vw 0.4vw 0 #ffd166;
+        }
+
+        .final-score {
+            font-size: 4.4vw;
+            margin: 5vh 0;
+            color: #2a9d8f;
+            font-weight: 700;
+        }
+
+        .stars {
+            display: flex;
+            justify-content: center;
+            gap: 2.4vh;
+            margin: 6vh 0;
+            font-size: 5.4vw;
+            z-index: 22;
+            position: relative;
+        }
+
+        .emoji-large {
+            font-size: 10vh;
+            margin: 5vh 0;
+            z-index: 22;
+            position: relative;
+        }
+
+        .stars .star {
+            color: #ffd700;
+            text-shadow: 0 0 1.2vh rgba(255, 215, 0, 0.6);
+        }
+
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            display: none;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 2.8vw;
+            height: 2.8vw;
+            background: #ff6b9d;
+            animation: fall linear forwards;
+            border-radius: 0.6vw;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .question-number {
+            font-size: 2.4vw;
+            color: #e9c46a;
+            margin-bottom: 3.6vh;
+            font-weight: 700;
+            z-index: 22;
+            position: relative;
+        }
+
+        .timer {
+            font-size: 2.8vw;
+            color: #e74c3c;
+            margin-bottom: 3.6vh;
+            font-weight: 700;
+            text-shadow: 0.2vw 0.2vw 0 #ffd166;
+            z-index: 22;
+            position: relative;
+        }
+
+        .prize-description {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            padding: 4vh 5vw;
+            border-radius: 4vw;
+            margin: 5vh auto;
+            font-size: 2.8vw;
+            font-weight: 700;
+            color: #c0392b;
+            box-shadow: 0 1.2vh 4vh rgba(0, 0, 0, 0.3);
+            max-width: 110vw;
+            border: 0.6vw dashed #e74c3c;
+            line-height: 1.6;
+            z-index: 22;
+            position: relative;
+        }
+
+        .feedback {
+            font-size: 2.7vw;
+            margin: 4vh 0;
+            padding: 3vh 3vw;
+            border-radius: 3vw;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            color: #2e7d32;
+            font-weight: 600;
+            display: none;
+            touch-action: manipulation;
+            z-index: 22;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="confetti-container" id="confettiContainer"></div>
+    
+    <div class="game-container">
+        <div class="header">
+            <div class="school-title">دبستان پسرانه بنیان - کلاس دوم</div>
+            <h1 class="title">بازی هیجان‌انگیز علوم✨</h1>
+            <p class="subtitle">۱۰ سوال جدید! جواب بده و جایزهٔ ویژه بگیر!</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div class="question-number" id="questionNumber">سوال ۱ از ۱۰</div>
+        <div class="timer" id="timer">زمان: <span id="timeCount">20</span> ثانیه</div>
+
+        <div class="question-box">
+            <div class="question-text" id="questionText">
+                آماده‌ای؟ برای شروع بازی روی دکمه بزن!
+            </div>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+
+        <div class="options-container" id="optionsContainer">
+            <!-- Options will be added here by JavaScript -->
+        </div>
+
+        <div class="score-display" id="scoreDisplay">امتیاز شما: <span id="scoreValue">0</span></div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="actionButton">شروع بازی!</button>
+        </div>
+
+        <div class="result-screen" id="resultScreen">
+            <div class="emoji-large">🏆</div>
+            <h2 class="result-title">تبریک می‌گیم قهرمان!</h2>
+            <div class="final-score">امتیاز نهایی شما: <span id="finalScore">0</span> از 100</div>
+            <div class="stars" id="starsContainer"></div>
+            <div class="prize-description" id="prizeDescription">
+                <!-- Prize description will be filled by JavaScript -->
+            </div>
+            <p id="resultMessage" style="font-size: 2.9vw; margin-top: 5vh; color: #264653;"></p>
+            <div class="controls">
+                <button class="btn btn-primary" id="restartButton">بازی دوباره با سوالات جدید!</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Complete question bank - 30 questions for random selection
+        const questionBank = [
+            {
+                question: "حرکت زمین به دور خورشید چه اتفاقی رخ می‌دهد؟",
+                options: [
+                    "فصل‌ها تغییر می‌کنند",
+                    "روز و شب ایجاد می‌شود",
+                    "ماه تغییر می‌کند",
+                    "ستاره‌ها می‌درخشند"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها باعث آلودگی آب می‌شود؟",
+                options: [
+                    "ریختن فاضلاب کارخانه در رودخانه",
+                    "آبیاری باغ",
+                    "شرب کردن آب",
+                    "شست‌وشوی دست"
+                ],
+                correct: 0
+            },
+            {
+                question: "شب و روز چگونه ایجاد می‌شوند؟",
+                options: [
+                    "به خاطر گردش زمین به دور خودش",
+                    "به خاطر گردش ماه به دور زمین",
+                    "به خاطر گردش زمین به دور خورشید",
+                    "به خاطر چرخش خورشید"
+                ],
+                correct: 0
+            },
+            {
+                question: "یادداشت‌برداری در مشاهده چه فایده‌ای دارد؟",
+                options: [
+                    "کمک می‌کند مشاهدات را فراموش نکنیم",
+                    "کمک می‌کند سریع بخوابیم",
+                    "کمک می‌کند بازی کنیم",
+                    "کمک می‌کند به مدرسه نرویم"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام مورد از کاربردهای هوا است؟",
+                options: [
+                    "روشن کردن آتش",
+                    "خوابیدن",
+                    "خواندن کتاب",
+                    "حل کردن جمع"
+                ],
+                correct: 0
+            },
+            {
+                question: "آب رودخانه برای شرب مناسب است؟",
+                options: [
+                    "خیر، باید آن را تصفیه کنیم",
+                    "بله، همیشه تمیز است",
+                    "فقط در تابستان",
+                    "فقط در زمستان"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء حواس پنج‌گانه نیست؟",
+                options: [
+                    "حواس ششم",
+                    "بینایی",
+                    "شنوایی",
+                    "چشایی"
+                ],
+                correct: 0
+            },
+            {
+                question: "هوای آلوده به چه چیزی آسیب می‌زند؟",
+                options: [
+                    "به موجودات زنده",
+                    "به خاک",
+                    "به آب",
+                    "به سنگ"
+                ],
+                correct: 0
+            },
+            {
+                question: "برای صرفه‌جویی در مصرف آب چه کاری انجام دهیم؟",
+                options: [
+                    "هنگام مسواک زدن آب را ببندیم",
+                    "آب را هدر دهیم",
+                    "آب را برای بازی استفاده کنیم",
+                    "آب را در رودخانه بریزیم"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء حرکت‌های زمین است؟",
+                options: [
+                    "گردشی و چرخشی",
+                    "بالا و پایین رفتن",
+                    "چپ و راست رفتن",
+                    "توقف کردن"
+                ],
+                correct: 0
+            },
+            {
+                question: "فصل‌های سال به چه ترتیب هستند؟",
+                options: [
+                    "بهار، تابستان، پاییز، زمستان",
+                    "تابستان، بهار، زمستان، پاییز",
+                    "زمستان، پاییز، تابستان، بهار",
+                    "پاییز، زمستان، بهار، تابستان"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء آب‌های آشامیدنی است؟",
+                options: [
+                    "آب تصفیه شده",
+                    "آب دریا",
+                    "آب رودخانه",
+                    "آب باران"
+                ],
+                correct: 0
+            },
+            {
+                question: "برای مشاهدهٔ دقیق‌تر از چه وسیله‌ای استفاده می‌کنیم؟",
+                options: [
+                    "ذره‌بین",
+                    "چراغ",
+                    "آینه",
+                    "کتاب"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء مصرف‌های هوا است؟",
+                options: [
+                    "نفس کشیدن",
+                    "خوابیدن",
+                    "خوردن غذا",
+                    "نوشتن"
+                ],
+                correct: 0
+            },
+            {
+                question: "چرا در زمستان هوا سردتر است؟",
+                options: [
+                    "چون خورشید مایل می‌تابد",
+                    "چون خورشید نمی‌درخشد",
+                    "چون زمین بزرگ می‌شود",
+                    "چون ماه سرد است"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء اجزای آب تصفیه شده نیست؟",
+                options: [
+                    "میکروب",
+                    "آب تمیز",
+                    "کلر",
+                    "بدون گل و لای"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء مراحل تصفیه آب است؟",
+                options: [
+                    "گرفتن گل و آشغال‌ها",
+                    "اضافه کردن زباله",
+                    "ریختن فاضلاب",
+                    "اضافه کردن خاک"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء حرکت چرخشی زمین است؟",
+                options: [
+                    "ایجاد روز و شب",
+                    "ایجاد فصل‌ها",
+                    "ایجاد ماه",
+                    "ایجاد ستاره"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء حرکت گردشی زمین است؟",
+                options: [
+                    "ایجاد فصل‌ها",
+                    "ایجاد روز و شب",
+                    "ایجاد ماه",
+                    "ایجاد خورشید"
+                ],
+                correct: 0
+            },
+            {
+                question: "هوای پاک برای چه چیزی مهم است؟",
+                options: [
+                    "زندگی موجودات",
+                    "زیبایی خانه",
+                    "رنگ‌آمیزی",
+                    "بازی کردن"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء مصرف‌های آب است؟",
+                options: [
+                    "شرب کردن",
+                    "ریختن در خیابان",
+                    "رها کردن در رودخانه",
+                    "اضافه کردن به زباله"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء صرفه‌جویی در آب نیست؟",
+                options: [
+                    "رها کردن آب هنگام مسواک زدن",
+                    "استفاده از آب برای آشامیدن",
+                    "استفاده از آب برای پخت غذا",
+                    "شست‌وشوی میوه"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء حواس پنج‌گانه است؟",
+                options: [
+                    "بویایی",
+                    "خواب",
+                    "بازی",
+                    "مطالعه"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء کاربردهای خورشید است؟",
+                options: [
+                    "گرم کردن زمین",
+                    "خاموش کردن آتش",
+                    "سرد کردن هوا",
+                    "تاریک کردن شب"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء اجزای آب آلوده است؟",
+                options: [
+                    "زباله",
+                    "آب تمیز",
+                    "کلر",
+                    "بدون میکروب"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء مراحل محافظت از آب است؟",
+                options: [
+                    "صرفه‌جویی در مصرف",
+                    "ریختن زباله در آب",
+                    "استفاده بیش از حد",
+                    "آلوده کردن رودخانه"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء مراحل محافظت از هوا است؟",
+                options: [
+                    "کاشت درخت",
+                    "سوزاندن زباله",
+                    "ریختن دود در هوا",
+                    "استفاده از ماشین بیش از حد"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء اجزای خورشید است؟",
+                options: [
+                    "نور و گرما",
+                    "آب",
+                    "هوا",
+                    "خاک"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء حرکت خورشید نیست؟",
+                options: [
+                    "گردش به دور زمین",
+                    "درخشش",
+                    "تابش نور",
+                    "گرم کردن"
+                ],
+                correct: 0
+            },
+            {
+                question: "کدام یک از این‌ها جزء کاربردهای ماه است؟",
+                options: [
+                    "نور در شب",
+                    "گرم کردن",
+                    "ایجاد روز",
+                    "ایجاد فصل"
+                ],
+                correct: 0
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let timeLeft = 20;
+        let timer;
+        let selectedOption = null;
+        let currentQuestions = [];
+        const totalQuestions = 10;
+
+        const questionText = document.getElementById('questionText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const actionButton = document.getElementById('actionButton');
+        const resultScreen = document.getElementById('resultScreen');
+        const scoreValue = document.getElementById('scoreValue');
+        const finalScore = document.getElementById('finalScore');
+        const timeCount = document.getElementById('timeCount');
+        const questionNumber = document.getElementById('questionNumber');
+        const progressBar = document.getElementById('progressBar');
+        const starsContainer = document.getElementById('starsContainer');
+        const resultMessage = document.getElementById('resultMessage');
+        const restartButton = document.getElementById('restartButton');
+        const prizeDescription = document.getElementById('prizeDescription');
+        const feedback = document.getElementById('feedback');
+        const confettiContainer = document.getElementById('confettiContainer');
+
+        // Add both click and touchstart event listeners for iOS compatibility
+        function addInteractionListener(element, callback) {
+            element.addEventListener('click', callback);
+            element.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                callback(e);
+            }, { passive: false });
+        }
+
+        // Function to get random unique questions
+        function getRandomQuestions(count) {
+            const shuffled = [...questionBank].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        function startGame() {
+            currentQuestion = 0;
+            score = 0;
+            scoreValue.textContent = score;
+            resultScreen.style.display = 'none';
+            actionButton.style.display = 'none';
+            currentQuestions = getRandomQuestions(totalQuestions);
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= totalQuestions) {
+                showResults();
+                return;
+            }
+
+            const q = currentQuestions[currentQuestion];
+            questionText.textContent = q.question;
+            questionNumber.textContent = `سوال ${currentQuestion + 1} از ${totalQuestions}`;
+            
+            // Update progress bar
+            const progress = ((currentQuestion) / totalQuestions) * 100;
+            progressBar.style.width = `${progress}%`;
+            
+            optionsContainer.innerHTML = '';
+            feedback.style.display = 'none';
+            
+            // Shuffle options for each question
+            const shuffledOptions = [...q.options].sort(() => 0.5 - Math.random());
+            shuffledOptions.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                // Find the correct index in shuffled array
+                const shuffledCorrectIndex = shuffledOptions.indexOf(q.options[q.correct]);
+                optionElement.dataset.index = index;
+                optionElement.dataset.iscorrect = (index === shuffledCorrectIndex).toString();
+                addInteractionListener(optionElement, selectOption);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            timeLeft = 20;
+            timeCount.textContent = timeLeft;
+            startTimer();
+        }
+
+        function selectOption(e) {
+            // Prevent multiple selections
+            if (selectedOption) return;
+            
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            e.target.classList.add('selected');
+            selectedOption = e.target;
+            
+            // Auto check answer immediately
+            setTimeout(() => {
+                checkAnswer();
+            }, 300);
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                timeLeft--;
+                timeCount.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    // Auto-select first option if time runs out
+                    const firstOption = document.querySelector('.option');
+                    if (firstOption && !selectedOption) {
+                        firstOption.classList.add('selected');
+                        selectedOption = firstOption;
+                        checkAnswer();
+                    } else if (!selectedOption) {
+                        // If no option selected at all, move to next question
+                        currentQuestion++;
+                        loadQuestion();
+                    }
+                }
+            }, 1000);
+        }
+
+        function checkAnswer() {
+            clearInterval(timer);
+            
+            const options = document.querySelectorAll('.option');
+            const isCorrect = selectedOption && selectedOption.dataset.iscorrect === 'true';
+            
+            if (isCorrect) {
+                score += 10;
+                scoreValue.textContent = score;
+                selectedOption.style.background = 'linear-gradient(135deg, #66bb6a, #81c784)';
+                selectedOption.style.color = 'white';
+                createConfetti(50);
+                
+                feedback.textContent = "آفرین! پاسخ شما کاملاً درست است! 👏";
+                feedback.style.background = 'linear-gradient(135deg, #e8f5e9, #c8e6c9)';
+                feedback.style.color = '#2e7d32';
+            } else {
+                if (selectedOption) {
+                    selectedOption.style.background = 'linear-gradient(135deg, #ef5350, #e57373)';
+                    selectedOption.style.color = 'white';
+                }
+                // Highlight correct answer
+                options.forEach(opt => {
+                    if (opt.dataset.iscorrect === 'true') {
+                        opt.style.background = 'linear-gradient(135deg, #66bb6a, #81c784)';
+                        opt.style.color = 'white';
+                    }
+                });
+                
+                feedback.textContent = "ناراحت نباش! پاسخ صحیح را ببین و یاد بگیر! 📚";
+                feedback.style.background = 'linear-gradient(135deg, #ffebee, #ffcdd2)';
+                feedback.style.color = '#c62828';
+            }
+            
+            feedback.style.display = 'block';
+            
+            // Disable all options
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Auto-proceed to next question after 2 seconds
+            setTimeout(() => {
+                currentQuestion++;
+                selectedOption = null;
+                loadQuestion();
+            }, 2000);
+        }
+
+        function showResults() {
+            actionButton.style.display = 'none';
+            questionText.textContent = '';
+            optionsContainer.innerHTML = '';
+            questionNumber.style.display = 'none';
+            document.querySelector('.timer').style.display = 'none';
+            feedback.style.display = 'none';
+            
+            finalScore.textContent = score;
+            resultScreen.style.display = 'block';
+            
+            // Show stars based on score
+            starsContainer.innerHTML = '';
+            const starCount = Math.floor(score / 10);
+            for (let i = 0; i < 10; i++) {
+                const star = document.createElement('span');
+                star.className = 'star';
+                star.textContent = i < starCount ? '★' : '☆';
+                starsContainer.appendChild(star);
+            }
+            
+            // Determine prize description based on score
+            let prizeDesc = "";
+            if (score >= 90) {
+                prizeDesc = "چون تو یک قهرمان واقعی علومی هستی، جایزه‌ات یک مدال طلایی و یک گواهی تقدیر ویژه از معلم عزیزته! همیشه این‌قدر باهوش باش!";
+                resultMessage.textContent = 'عالی! تو یک نابغهٔ علومی! 🌟';
+                createConfetti(200);
+            } else if (score >= 70) {
+                prizeDesc = "برای تلاش زیباتو، یک تیغهٔ فضایی و یک کتاب علمی جالب از سوی معلم کلاس دوم دبستان پسرانه بنیان هدیه می‌گیری! ادامه بده قهرمان!";
+                resultMessage.textContent = 'خیلی خوب! تو یک ستارهٔ درخشانی! ✨';
+            } else if (score >= 50) {
+                prizeDesc = "بچه‌های باهوش مثل تو deserve یک بستنی خوشمزه و یک کارت تقدیر از معلم کلاس دوم! سعی کن دفعهٔ بعد بیشتر از ۷۰ بگیری!";
+                resultMessage.textContent = 'خب! سعی کن بیشتر مطالعه کنی! 💪';
+            } else {
+                prizeDesc = "معلم کلاس دوم می‌دونه که تو می‌تونی! برای تلاشت یک شکلات خوشمزه و یک وعدنامهٔ خاص گرفتی که دفعهٔ بعد حتماً بیشتر از ۵۰ نمره بگیری! پسرهای کلاس دوم بنیان همیشه قوی‌ان!";
+                resultMessage.textContent = 'نگران نباش! هر کسی می‌تونه یاد بگیره! 🤗';
+            }
+            prizeDescription.textContent = prizeDesc;
+        }
+
+        function createConfetti(count) {
+            confettiContainer.innerHTML = '';
+            confettiContainer.style.display = 'block';
+            
+            const colors = ['#ff6b9d', '#ff7e5f', '#ffe066', '#a8e6cf', '#ffd166', '#6eceda', '#ff9e6d'];
+            
+            for (let i = 0; i < count; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.width = (Math.random() * 2.4 + 1.2) + 'vw';
+                piece.style.height = piece.style.width;
+                piece.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                piece.style.animationDelay = Math.random() * 2 + 's';
+                confettiContainer.appendChild(piece);
+            }
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+                confettiContainer.style.display = 'none';
+                confettiContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Event listeners with both click and touchstart
+        addInteractionListener(actionButton, () => {
+            if (actionButton.textContent === 'شروع بازی!' || actionButton.textContent === 'بازی دوباره با سوالات جدید!') {
+                startGame();
+            }
+        });
+
+        addInteractionListener(restartButton, () => {
+            resultScreen.style.display = 'none';
+            questionNumber.style.display = 'block';
+            document.querySelector('.timer').style.display = 'block';
+            actionButton.style.display = 'block';
+            actionButton.textContent = 'بازی دوباره با سوالات جدید!';
+            startGame();
+        });
+
+        // Initialize
+        document.querySelector('.timer').style.display = 'none';
+        questionNumber.style.display = 'none';
+    </script>
+</body>
+</html>
